@@ -17,10 +17,10 @@ export default function CTA() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
-          className="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-lg p-8 md:p-12 shadow-2xl relative overflow-hidden"
+          className="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-lg p-8 md:p-12 shadow-2xl relative overflow-hidden cursor-pointer"
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
-          <div className="relative z-10 text-center">
+          <div className="relative z-20 text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to Revolutionize Your File Uploads?
             </h2>
@@ -31,7 +31,7 @@ export default function CTA() {
             </p>
             <Button
               size="lg"
-              className="bg-green-500 text-black hover:bg-green-600 transition-colors duration-300 transform hover:scale-105 active:scale-95"
+              className="bg-green-500 text-black hover:bg-green-600 transition-all duration-300 ease-out hover:translate-y-[-4px] hover:shadow-[0_8px_30px_rgba(34,197,94,0.4)] active:translate-y-[0px] relative z-30"
             >
               <Download className="mr-2 h-5 w-5" />
               Download ksau CLI

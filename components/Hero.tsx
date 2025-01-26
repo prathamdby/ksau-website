@@ -40,7 +40,7 @@ export default function Hero() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
-                    className="bg-green-500 text-black hover:bg-green-600 transition-colors duration-300 transform hover:scale-105 active:scale-95"
+                    className="bg-green-500 text-black hover:bg-green-600 transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px]"
                   >
                     Get Started
                     <ChevronRight className="ml-2 h-5 w-5" />
@@ -48,7 +48,7 @@ export default function Hero() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-green-500 text-green-500 hover:bg-green-500/10 transition-colors duration-300 transform hover:scale-105 active:scale-95"
+                    className="border-green-500 text-green-500 bg-transparent hover:bg-green-500 hover:text-black transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px]"
                   >
                     Learn More
                   </Button>

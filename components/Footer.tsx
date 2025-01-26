@@ -70,7 +70,7 @@ export default function Footer() {
                 <a
                   key={index}
                   href="#"
-                  className="hover:text-green-500 transition-colors duration-300 transform hover:scale-110"
+                  className="hover:text-green-500 transition-all duration-300 ease-out relative after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-green-500 after:transition-all hover:after:w-full"
                 >
                   <Icon className="h-6 w-6" />
                 </a>

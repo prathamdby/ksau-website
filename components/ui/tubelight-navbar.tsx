@@ -48,11 +48,11 @@ export function NavBar({ items, className }: NavBarProps) {
   return (
     <div
       className={cn(
-        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6",
+        "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6 h-fit pointer-events-none",
         className,
       )}
     >
-      <div className="flex items-center gap-3 bg-black/50 border border-green-500/20 backdrop-blur-lg py-1 px-4 rounded-full shadow-lg">
+      <div className="flex items-center gap-3 bg-black/50 border border-green-500/20 backdrop-blur-lg py-1 px-4 rounded-full shadow-lg pointer-events-auto">
         <div className="flex items-center gap-2 mr-2">
           <Upload className="h-5 w-5 text-green-500" />
           <span className="text-green-500 font-bold hidden md:inline">
@@ -69,8 +69,8 @@ export function NavBar({ items, className }: NavBarProps) {
               href={item.url}
               onClick={(e) => handleClick(e, item)}
               className={cn(
-                "relative cursor-pointer text-sm font-semibold px-4 py-2 rounded-full transition-colors",
-                "text-gray-400 hover:text-green-500",
+                "relative cursor-pointer text-sm font-semibold px-4 py-2 rounded-full transition-all duration-300 ease-out",
+                "text-gray-400 hover:text-green-500 hover:scale-105",
                 isActive && "text-green-500",
               )}
             >
