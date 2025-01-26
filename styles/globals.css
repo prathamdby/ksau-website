@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 0 0 0;
+  --foreground: 255 255 255;
+  --primary: 0 255 0;
+  --primary-foreground: 0 0 0;
+  --muted: 10 10 10;
+  --muted-foreground: 120 120 120;
+  --border: 30 30 30;
+}
+
+body {
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+}
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(0, 255, 0, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .bg-radial-gradient {
+    background: radial-gradient(
+      circle at center,
+      rgba(0, 255, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0) 70%
+    );
+  }
+}
