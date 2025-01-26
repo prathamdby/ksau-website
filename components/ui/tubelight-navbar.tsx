@@ -46,14 +46,15 @@ export function NavBar({ items, className }: NavBarProps) {
   );
 
   return (
-    <div
+    <nav
       className={cn(
         "fixed bottom-0 sm:top-0 left-1/2 -translate-x-1/2 z-50 mb-6 sm:pt-6 h-fit pointer-events-none",
         className,
       )}
+      role="navigation"
     >
       <div className="flex items-center gap-3 bg-black/50 border border-green-500/20 backdrop-blur-lg py-1 px-4 rounded-full shadow-lg pointer-events-auto">
-        <div className="flex items-center gap-2 mr-2">
+        <div className="flex items-center gap-2 mr-2" aria-hidden="true">
           <Upload className="h-5 w-5 text-green-500" />
           <span className="text-green-500 font-bold hidden md:inline">
             ksau
@@ -73,10 +74,13 @@ export function NavBar({ items, className }: NavBarProps) {
                 "text-gray-400 hover:text-green-500 hover:scale-105",
                 isActive && "text-green-500",
               )}
+              aria-current={isActive ? "page" : undefined}
+              role="menuitem"
+              aria-label={`${item.name} section`}
             >
               <span className="hidden md:inline">{item.name}</span>
-              <span className="md:hidden">
-                <Icon size={18} strokeWidth={2.5} />
+              <span className="md:hidden" aria-label={item.name}>
+                <Icon size={18} strokeWidth={2.5} aria-hidden="true" />
               </span>
               <AnimatePresence>
                 {isActive && (
@@ -91,11 +95,12 @@ export function NavBar({ items, className }: NavBarProps) {
                       stiffness: 300,
                       damping: 30,
                     }}
+                    aria-hidden="true"
                   >
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-green-500 rounded-t-full">
-                      <div className="absolute w-12 h-6 bg-green-500/20 rounded-full blur-md -top-2 -left-2" />
-                      <div className="absolute w-8 h-6 bg-green-500/20 rounded-full blur-md -top-1" />
-                      <div className="absolute w-4 h-4 bg-green-500/20 rounded-full blur-sm top-0 left-2" />
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-green-500 rounded-t-full" aria-hidden="true">
+                      <div className="absolute w-12 h-6 bg-green-500/20 rounded-full blur-md -top-2 -left-2" aria-hidden="true" />
+                      <div className="absolute w-8 h-6 bg-green-500/20 rounded-full blur-md -top-1" aria-hidden="true" />
+                      <div className="absolute w-4 h-4 bg-green-500/20 rounded-full blur-sm top-0 left-2" aria-hidden="true" />
                     </div>
                   </motion.div>
                 )}
@@ -104,6 +109,6 @@ export function NavBar({ items, className }: NavBarProps) {
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }

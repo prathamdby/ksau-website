@@ -19,8 +19,14 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="relative z-50">
-      {mounted && <NavBar items={navItems} className="sm:mt-4" />}
+    <header className="relative z-50" role="banner">
+      {mounted && (
+        <NavBar
+          items={navItems}
+          className="sm:mt-4"
+          aria-label="Main navigation"
+        />
+      )}
     </header>
   );
 }
