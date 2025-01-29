@@ -36,6 +36,20 @@ export default function Hero() {
                 transition={{ duration: 0.8 }}
                 role="presentation"
               >
+                <div className="mb-6">
+                  <motion.span
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm font-medium bg-green-500/10 text-green-500 border border-green-500/20 backdrop-blur-sm hover:bg-green-500/20 transition-colors"
+                  >
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    Join thousands of happy users today ✨
+                  </motion.span>
+                </div>
                 <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6">
                   Unleash the Power of{" "}
                   <span className="text-green-500">ksau</span>
