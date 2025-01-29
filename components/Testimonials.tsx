@@ -5,28 +5,25 @@ import Image from "next/image";
 
 const testimonials = [
   {
-    name: "Alex Johnson",
+    name: "Pranaya Deomani",
     role: "Software Developer",
     content:
       "ksau has revolutionized the way I handle file uploads. It's incredibly fast and user-friendly!",
-    avatar:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80",
+    avatar: "https://github.com/pranayadmn.png",
   },
   {
-    name: "Sarah Lee",
-    role: "Digital Marketer",
+    name: "Kardebayan",
+    role: "Android Developer",
     content:
       "I've tried many file upload tools, but ksau stands out with its simplicity and powerful features.",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80",
+    avatar: "https://github.com/kardebayan.png",
   },
   {
-    name: "Michael Chen",
-    role: "IT Manager",
+    name: "eun0115",
+    role: "System Developer",
     content:
-      "The security features of ksau give me peace of mind when handling sensitive company data.",
-    avatar:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80",
+      "The security features of ksau give me peace of mind when handling sensitive files.",
+    avatar: "https://github.com/eun0115.png",
   },
 ];
 
@@ -56,7 +53,7 @@ export default function Testimonials() {
           </p>
         </motion.div>
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto"
+          className="flex flex-col gap-4 max-w-3xl mx-auto"
           role="list"
           aria-label="User testimonials list"
         >
@@ -65,7 +62,7 @@ export default function Testimonials() {
               key={index}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-black p-6 rounded-lg border border-green-500/30 shadow-xl relative overflow-hidden transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-2xl hover:border-green-500/50"
               role="listitem"
               aria-labelledby={`testimonial-name-${index}`}
@@ -73,14 +70,15 @@ export default function Testimonials() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-50" aria-hidden="true"></div>
               <div className="relative z-10">
                 <div className="flex items-center mb-4">
-                  <Image
-                    src={testimonial.avatar || "/placeholder.svg"}
-                    alt={`Profile picture of ${testimonial.name}`}
-                    width={50}
-                    height={50}
-                    className="rounded-full mr-4"
-                    loading="lazy"
-                  />
+                  <div className="w-12 h-12 relative mr-4 flex-shrink-0">
+                    <Image
+                      src={testimonial.avatar}
+                      alt={`Profile picture of ${testimonial.name}`}
+                      fill
+                      className="rounded-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
                   <div>
                     <h3
                       id={`testimonial-name-${index}`}
@@ -94,7 +92,7 @@ export default function Testimonials() {
                   </div>
                 </div>
                 <blockquote className="text-gray-300 italic">
-                  <p>{testimonial.content}</p>
+                  <p>"{testimonial.content}"</p>
                 </blockquote>
               </div>
             </motion.div>
