@@ -18,7 +18,7 @@ const socials = {
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-gray-400 border-t border-green-500/20 relative overflow-hidden">
+    <footer className="bg-black text-gray-400 border-t border-green-500/20 relative overflow-hidden pb-20 sm:pb-0">
       <div className="absolute inset-0 bg-grid opacity-5"></div>
       <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-6 relative z-10">
         <div className="max-w-6xl mx-auto flex flex-col gap-4 sm:gap-6">
