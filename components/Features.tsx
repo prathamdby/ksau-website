@@ -2,30 +2,65 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Zap, Lock, RefreshCcw, Layers } from "lucide-react";
+import { Zap, Lock, RefreshCcw, Layers, Share2, Search } from "lucide-react";
+import { BentoCard, BentoGrid } from "./ui/bento-grid";
 
 const features = [
   {
-    icon: Zap,
-    title: "Lightning Fast",
+    Icon: Zap,
+    name: "Lightning Fast",
     description: "Upload files at breakneck speeds, saving you valuable time.",
+    href: "#features",
+    cta: "Learn more",
+    background: <div className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-1 lg:col-end-2 lg:row-start-1 lg:row-end-2",
   },
   {
-    icon: Lock,
-    title: "Bank-Level Security",
+    Icon: Lock,
+    name: "Bank-Level Security",
     description: "Your files are protected with state-of-the-art encryption.",
+    href: "#features",
+    cta: "Learn more",
+    background: <div className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:row-start-1 lg:row-end-3 lg:col-start-2 lg:col-end-3",
   },
   {
-    icon: RefreshCcw,
-    title: "Seamless Sync",
+    Icon: RefreshCcw,
+    name: "Seamless Sync",
     description: "Automatically sync your uploads across all your devices.",
+    href: "#features",
+    cta: "Learn more",
+    background: <div className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-3 lg:col-end-4 lg:row-start-1 lg:row-end-2",
   },
   {
-    icon: Layers,
-    title: "Unlimited Storage",
+    Icon: Layers,
+    name: "Unlimited Storage",
     description:
       "Never worry about running out of space for your important files.",
+    href: "#features",
+    cta: "Learn more",
+    background: <div className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-1 lg:col-end-2 lg:row-start-2 lg:row-end-4",
   },
+  {
+    Icon: Share2,
+    name: "Easy Sharing",
+    description: "Share files securely with customizable access controls.",
+    href: "#features",
+    cta: "Learn more",
+    background: <div className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-2 lg:col-end-3 lg:row-start-3 lg:row-end-4",
+  },
+  {
+    Icon: Search,
+    name: "Smart Search",
+    description: "Find any file instantly with powerful search capabilities.",
+    href: "#features",
+    cta: "Learn more",
+    background: <div className="absolute -right-20 -top-20 opacity-60" />,
+    className: "lg:col-start-3 lg:col-end-4 lg:row-start-2 lg:row-end-4",
+  }
 ];
 
 export default function Features() {
@@ -60,45 +95,18 @@ export default function Features() {
             management effortless and efficient.
           </p>
         </motion.div>
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-          role="list"
-          aria-label="List of ksau features"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto"
         >
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-black p-6 rounded-lg border border-green-500/30 shadow-xl relative overflow-hidden transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-2xl hover:border-green-500/50"
-              role="listitem"
-              aria-labelledby={`feature-title-${index}`}
-            >
-              <div
-                className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-50"
-                aria-hidden="true"
-              ></div>
-              <div className="relative z-10">
-                <feature.icon
-                  className="h-12 w-12 text-green-500 mb-4 mx-auto"
-                  aria-hidden="true"
-                  role="img"
-                  aria-label={`${feature.title} icon`}
-                />
-                <h3
-                  id={`feature-title-${index}`}
-                  className="text-xl font-semibold text-white mb-2 text-center"
-                >
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 text-center">
-                  {feature.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+          <BentoGrid className="lg:grid-rows-3">
+            {features.map((feature) => (
+              <BentoCard key={feature.name} {...feature} />
+            ))}
+          </BentoGrid>
+        </motion.div>
       </div>
     </section>
   );
