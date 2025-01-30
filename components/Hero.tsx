@@ -36,7 +36,7 @@ export default function Hero() {
                 transition={{ duration: 0.8 }}
                 role="presentation"
               >
-                <div className="mb-6">
+                <div className="mb-6 flex justify-center sm:justify-start">
                   <motion.span
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
