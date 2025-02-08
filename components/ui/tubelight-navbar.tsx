@@ -97,10 +97,22 @@ export function NavBar({ items, className }: NavBarProps) {
                     }}
                     aria-hidden="true"
                   >
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-green-500 rounded-t-full" aria-hidden="true">
-                      <div className="absolute w-12 h-6 bg-green-500/20 rounded-full blur-md -top-2 -left-2" aria-hidden="true" />
-                      <div className="absolute w-8 h-6 bg-green-500/20 rounded-full blur-md -top-1" aria-hidden="true" />
-                      <div className="absolute w-4 h-4 bg-green-500/20 rounded-full blur-sm top-0 left-2" aria-hidden="true" />
+                    <div
+                      className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-green-500 rounded-t-full"
+                      aria-hidden="true"
+                    >
+                      <div
+                        className="absolute w-12 h-6 bg-green-500/20 rounded-full blur-md -top-2 -left-2"
+                        aria-hidden="true"
+                      />
+                      <div
+                        className="absolute w-8 h-6 bg-green-500/20 rounded-full blur-md -top-1"
+                        aria-hidden="true"
+                      />
+                      <div
+                        className="absolute w-4 h-4 bg-green-500/20 rounded-full blur-sm top-0 left-2"
+                        aria-hidden="true"
+                      />
                     </div>
                   </motion.div>
                 )}

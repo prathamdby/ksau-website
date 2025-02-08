@@ -44,12 +44,7 @@ export default function CTA() {
             <Button
               size="lg"
               className="bg-green-500 text-black hover:bg-green-600 transition-all duration-300 ease-out hover:translate-y-[-4px] hover:shadow-[0_8px_30px_rgba(34,197,94,0.4)] active:translate-y-[0px] relative z-30"
-              onClick={() =>
-                window.open(
-                  "https://github.com/global-index-source/ksau-go/releases/latest",
-                  "_blank"
-                )
-              }
+              onClick={() => (window.location.href = "/docs/installation")}
               aria-label="Download ksau Command Line Interface"
               rel="noopener noreferrer"
             >

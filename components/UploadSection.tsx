@@ -68,22 +68,27 @@ export default function UploadSection() {
               aria-describedby="file-status"
             />
             <div id="file-status" className="sr-only">
-              {file ? `Selected file: ${file.name}` : 'No file selected'}
+              {file ? `Selected file: ${file.name}` : "No file selected"}
             </div>
             <Button
               onClick={handleUpload}
               disabled={!file || uploading || uploaded}
               className="w-full max-w-md bg-green-500 text-black hover:bg-green-600 disabled:bg-gray-700 disabled:text-gray-500"
               aria-label={
-                uploading ? "File upload in progress" :
-                uploaded ? "File successfully uploaded" :
-                "Upload selected file"
+                uploading
+                  ? "File upload in progress"
+                  : uploaded
+                    ? "File successfully uploaded"
+                    : "Upload selected file"
               }
               aria-busy={uploading}
               aria-disabled={!file || uploading || uploaded}
             >
               {uploading ? (
-                <Upload className="mr-2 h-4 w-4 animate-bounce" aria-hidden="true" />
+                <Upload
+                  className="mr-2 h-4 w-4 animate-bounce"
+                  aria-hidden="true"
+                />
               ) : uploaded ? (
                 <Check className="mr-2 h-4 w-4" aria-hidden="true" />
               ) : (

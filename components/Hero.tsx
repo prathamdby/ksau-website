@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Upload, Lock, Zap } from "lucide-react";
+import { ChevronRight, Upload, Lock, Zap, Book } from "lucide-react";
 
 export default function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -72,15 +72,12 @@ export default function Hero() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-green-500 text-green-500 bg-transparent hover:bg-green-500 hover:text-black transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px]"
-                    onClick={() => {
-                      document
-                        .querySelector("#about")
-                        ?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    aria-label="Learn more about ksau features"
+                    className="border-green-500/50 text-green-500 bg-black/50 backdrop-blur-sm hover:bg-green-500 hover:text-black transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px]"
+                    onClick={() => (window.location.href = "/docs")}
+                    aria-label="View documentation"
                   >
-                    Learn More
+                    <Book className="mr-2 h-5 w-5" aria-hidden="true" />
+                    Docs
                   </Button>
                 </div>
               </motion.div>

@@ -60,7 +60,7 @@ const features = [
     cta: "Learn more",
     background: <div className="absolute -right-20 -top-20 opacity-60" />,
     className: "lg:col-start-3 lg:col-end-4 lg:row-start-2 lg:row-end-4",
-  }
+  },
 ];
 
 export default function Features() {

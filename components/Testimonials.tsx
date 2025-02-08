@@ -35,7 +35,10 @@ export default function Testimonials() {
       aria-label="User Testimonials"
       role="region"
     >
-      <div className="absolute inset-0 bg-grid opacity-10" aria-hidden="true"></div>
+      <div
+        className="absolute inset-0 bg-grid opacity-10"
+        aria-hidden="true"
+      ></div>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -67,7 +70,10 @@ export default function Testimonials() {
               role="listitem"
               aria-labelledby={`testimonial-name-${index}`}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-50" aria-hidden="true"></div>
+              <div
+                className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-50"
+                aria-hidden="true"
+              ></div>
               <div className="relative z-10">
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 relative mr-4 flex-shrink-0">
