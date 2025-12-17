@@ -10,34 +10,6 @@ interface GlowTextProps {
   color?: "phosphor" | "amber" | "cyan";
 }
 
-export function GlowText({
-  children,
-  intensity = "md",
-  as: Component = "span",
-  className,
-  color = "phosphor",
-}: GlowTextProps) {
-  const intensityStyles = {
-    sm: "text-glow-sm",
-    md: "text-glow",
-    lg: "text-glow",
-  };
-
-  const colorStyles = {
-    phosphor: "text-phosphor-400",
-    amber: "text-terminal-amber",
-    cyan: "text-terminal-cyan",
-  };
-
-  return (
-    <Component
-      className={cn(intensityStyles[intensity], colorStyles[color], className)}
-    >
-      {children}
-    </Component>
-  );
-}
-
 interface GlowBadgeProps {
   children: React.ReactNode;
   className?: string;
@@ -91,24 +63,6 @@ export function StatusIndicator({
           statusColors[status]
         )}
       />
-    </span>
-  );
-}
-
-interface VersionBadgeProps {
-  version: string;
-  className?: string;
-}
-
-export function VersionBadge({ version, className }: VersionBadgeProps) {
-  return (
-    <span
-      className={cn(
-        "text-xs text-text-ghost font-medium tracking-wide",
-        className
-      )}
-    >
-      {version}
     </span>
   );
 }

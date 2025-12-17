@@ -47,28 +47,3 @@ export function TerminalWindow({
     </div>
   );
 }
-
-export function TerminalWindowHeader({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={cn("terminal-window-header", className)}>
-      <TrafficLights />
-      {children}
-    </div>
-  );
-}
-
-export function TerminalWindowContent({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <div className={cn("terminal-content", className)}>{children}</div>;
-}
