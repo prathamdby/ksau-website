@@ -1,142 +1,250 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, Upload, Lock, Zap, Book } from "lucide-react";
+import { ChevronRight, Book, Check, ArrowRight } from "lucide-react";
+import { TerminalWindow } from "@/components/ui/terminal-window";
+import { GlowBadge, StatusIndicator } from "@/components/ui/glow-text";
+import { useState, useEffect } from "react";
 
-export default function Hero() {
-  const [mounted, setMounted] = useState(false);
+function UploadSimulation() {
+  const [stage, setStage] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const stages = [
+      { delay: 500, duration: 0 },
+      { delay: 100, duration: 2000 },
+      { delay: 500, duration: 0 },
+    ];
+
+    let timeout: NodeJS.Timeout;
+
+    if (stage === 0) {
+      timeout = setTimeout(() => setStage(1), stages[0].delay);
+    } else if (stage === 1) {
+      const interval = setInterval(() => {
+        setProgress((p) => {
+          if (p >= 100) {
+            clearInterval(interval);
+            setTimeout(() => setStage(2), 300);
+            return 100;
+          }
+          return p + 2;
+        });
+      }, 40);
+      return () => clearInterval(interval);
+    } else if (stage === 2) {
+      timeout = setTimeout(() => {
+        setStage(0);
+        setProgress(0);
+      }, 3000);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [stage]);
+
+  const progressBar = "█".repeat(Math.floor(progress / 5)) + "░".repeat(20 - Math.floor(progress / 5));
 
   return (
-    <AnimatePresence>
-      {mounted && (
-        <motion.section
+    <div className="space-y-2 text-sm">
+      <div className="flex items-center gap-2">
+        <span className="text-phosphor-400">$</span>
+        <span className="text-text-primary">ksau upload demo.zip</span>
+        {stage === 0 && <span className="cursor-blink text-phosphor-400">▌</span>}
+      </div>
+
+      {stage >= 1 && (
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden py-20"
-          role="region"
-          aria-label="Hero section"
+          className="pl-4 space-y-1"
         >
-          <div
-            className="absolute inset-0 z-0 bg-radial-gradient"
-            aria-hidden="true"
-          ></div>
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                role="presentation"
-              >
-                <div className="mb-6 flex justify-center sm:justify-start">
-                  <motion.span
-                    initial={{ opacity: 0, y: -20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                    className="inline-flex items-center gap-2 rounded-full px-5 py-1.5 text-sm font-medium bg-green-500/10 text-green-500 border border-green-500/20 backdrop-blur-sm hover:bg-green-500/20 transition-colors"
-                  >
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    Join thousands of happy users today ✨
-                  </motion.span>
-                </div>
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-6">
-                  Unleash the Power of{" "}
-                  <span className="text-green-500">ksau</span>
-                </h1>
-                <p className="text-xl md:text-2xl text-gray-400 mb-8">
-                  Lightning-fast file uploads for everyone, anywhere, anytime.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Button
-                    size="lg"
-                    className="bg-green-500 text-black hover:bg-green-600 transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px]"
-                    onClick={() =>
-                      window.open("https://web.ksauraj.eu.org/", "_blank")
-                    }
-                    aria-label="Get Started with ksau file uploads"
-                  >
-                    Get Started
-                    <ChevronRight className="ml-2 h-5 w-5" aria-hidden="true" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-green-500/50 text-green-500 bg-black/50 backdrop-blur-sm hover:bg-green-500 hover:text-black transition-all duration-300 ease-out hover:translate-y-[-2px] hover:shadow-lg active:translate-y-[0px]"
-                    onClick={() => (window.location.href = "/docs")}
-                    aria-label="View documentation"
-                  >
-                    <Book className="mr-2 h-5 w-5" aria-hidden="true" />
-                    Docs
-                  </Button>
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="lg:block"
-                role="complementary"
-                aria-label="Feature highlights"
-              >
-                <div className="relative">
-                  <div
-                    className="absolute top-0 left-0 w-full h-full bg-green-500/10 rounded-lg transform rotate-3"
-                    aria-hidden="true"
-                  ></div>
-                  <div className="relative bg-black p-8 rounded-lg border border-green-500/30 shadow-xl">
-                    <div className="flex justify-between items-center mb-6">
-                      <Upload
-                        className="h-12 w-12 text-green-500"
-                        aria-hidden="true"
-                      />
-                      <div className="text-right">
-                        <h2 className="text-2xl font-bold text-green-500">
-                          ksau
-                        </h2>
-                        <p className="text-gray-500" aria-label="Version 1.0.0">
-                          v1.0.0
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex items-center" role="listitem">
-                        <Zap
-                          className="h-6 w-6 text-yellow-500 mr-2"
-                          aria-hidden="true"
-                        />
-                        <p className="text-gray-300">Lightning-fast uploads</p>
-                      </div>
-                      <div className="flex items-center" role="listitem">
-                        <Lock
-                          className="h-6 w-6 text-blue-500 mr-2"
-                          aria-hidden="true"
-                        />
-                        <p className="text-gray-300">Secure and encrypted</p>
-                      </div>
-                    </div>
-                    <div className="mt-6 pt-6 border-t border-green-500/20">
-                      <p className="text-sm text-gray-500">
-                        Ready to revolutionize your file uploads?
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
+          <div className="text-text-tertiary">
+            Uploading: demo.zip (2.4 MB)
           </div>
-        </motion.section>
+          <div className="flex items-center gap-2">
+            <span className="text-phosphor-400">[{progressBar}]</span>
+            <span className="text-text-secondary">{progress}%</span>
+          </div>
+        </motion.div>
       )}
-    </AnimatePresence>
+
+      {stage === 2 && (
+        <motion.div
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="pl-4 space-y-1"
+        >
+          <div className="flex items-center gap-2 text-phosphor-400">
+            <Check className="h-4 w-4" />
+            <span>Upload complete in 2.4s</span>
+          </div>
+          <div className="text-text-secondary">
+            <span className="text-text-tertiary">→</span>{" "}
+            <span className="text-terminal-cyan underline">https://ksau.io/f3x9k</span>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+}
+
+function FeatureList() {
+  const features = [
+    { text: "Lightning-fast uploads", color: "text-terminal-amber" },
+    { text: "End-to-end encryption", color: "text-terminal-cyan" },
+    { text: "CLI-first experience", color: "text-phosphor-400" },
+  ];
+
+  return (
+    <div className="space-y-3">
+      {features.map((feature, index) => (
+        <motion.div
+          key={feature.text}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.8 + index * 0.1 }}
+          className="flex items-center gap-3"
+        >
+          <div className={`h-1.5 w-1.5 rounded-full ${feature.color.replace("text-", "bg-")}`} />
+          <span className="text-text-secondary">{feature.text}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+export default function Hero() {
+  return (
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 pb-16"
+    >
+      <div className="absolute inset-0 bg-terminal-grid opacity-30" />
+      <div className="absolute inset-0 bg-radial-glow" />
+
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center lg:text-left"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mb-6 flex justify-center lg:justify-start"
+            >
+              <GlowBadge>
+                <StatusIndicator status="online" />
+                <span>v1.0 now available</span>
+              </GlowBadge>
+            </motion.div>
+
+            <motion.h1
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tighter mb-6"
+            >
+              <span className="text-text-primary">Lightning-fast</span>
+              <br />
+              <span className="text-phosphor-400 text-glow">file uploads</span>
+              <span className="cursor-blink text-phosphor-400 font-light">_</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-lg sm:text-xl text-text-secondary mb-8 max-w-xl mx-auto lg:mx-0"
+            >
+              Upload files at terminal speed. Secure, simple, and built for
+              developers who live in the command line.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10"
+            >
+              <Button
+                size="lg"
+                className="bg-phosphor-400 text-terminal-bg hover:bg-phosphor-300 transition-all duration-200 hover:shadow-glow-md font-semibold"
+                onClick={() => window.open("https://web.ksauraj.eu.org/", "_blank")}
+              >
+                Get Started
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-phosphor-400/30 text-phosphor-400 bg-transparent hover:bg-phosphor-400/10 hover:border-phosphor-400/50 transition-all duration-200"
+                onClick={() => (window.location.href = "/docs")}
+              >
+                <Book className="mr-2 h-5 w-5" />
+                Documentation
+              </Button>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              <FeatureList />
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="relative"
+          >
+            <div className="absolute -inset-4 bg-phosphor-400/5 rounded-2xl blur-xl" />
+            <TerminalWindow title="ksau — terminal" className="relative">
+              <UploadSimulation />
+            </TerminalWindow>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1 }}
+              className="mt-6 flex items-center justify-center gap-6 text-sm text-text-tertiary"
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-phosphor-400">✓</span>
+                <span>No signup required</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-phosphor-400">✓</span>
+                <span>Open source</span>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
+        >
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-2 text-text-ghost"
+          >
+            <span className="text-xs tracking-wider uppercase">Scroll</span>
+            <ArrowRight className="h-4 w-4 rotate-90" />
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
   );
 }

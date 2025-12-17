@@ -1,12 +1,23 @@
 import "./globals.css";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
+  display: "swap",
+});
 
 export const metadata = {
-  title: "ksau - Revolutionary File Upload Tool",
+  title: "ksau - Lightning-Fast CLI File Uploads",
   description:
-    "ksau: Lightning-fast, secure, and effortless file uploads for everyone. Created by Sauraj, Hakimi, and Pratham.",
+    "ksau: Terminal-native file uploads. Lightning-fast, secure, and effortless. Built for developers who live in the command line.",
+  keywords: ["file upload", "CLI", "terminal", "developer tools", "command line"],
+  authors: [{ name: "Sauraj" }, { name: "Hakimi" }, { name: "Pratham" }],
+  openGraph: {
+    title: "ksau - Lightning-Fast CLI File Uploads",
+    description: "Terminal-native file uploads for developers who live in the command line.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -15,8 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body className={`${jetbrainsMono.variable} font-mono scanlines vignette`}>
+        {children}
+      </body>
     </html>
   );
 }
