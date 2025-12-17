@@ -19,7 +19,8 @@ const CustomH1 = ({
 }: React.HTMLAttributes<HTMLHeadingElement>) => (
   <h1
     className={cn(
-      "mt-2 scroll-m-20 text-3xl md:text-4xl font-bold tracking-tight text-foreground first:mt-0",
+      "mt-2 scroll-m-20 text-3xl md:text-4xl font-bold font-mono text-text-primary first:mt-0",
+      "text-glow-sm",
       className,
     )}
     {...props}
@@ -32,7 +33,10 @@ const CustomH2 = ({
 }: React.HTMLAttributes<HTMLHeadingElement>) => (
   <h2
     className={cn(
-      "mt-8 md:mt-10 scroll-m-20 border-b pb-2 text-2xl md:text-3xl font-semibold tracking-tight text-foreground first:mt-0",
+      "mt-12 md:mt-16 scroll-m-20 pb-3 text-2xl md:text-3xl font-semibold font-mono text-text-primary first:mt-0",
+      "border-b border-terminal-border",
+      "flex items-center gap-3",
+      "before:content-['##'] before:text-phosphor-400 before:text-xl",
       className,
     )}
     {...props}
@@ -45,7 +49,9 @@ const CustomH3 = ({
 }: React.HTMLAttributes<HTMLHeadingElement>) => (
   <h3
     className={cn(
-      "mt-6 md:mt-8 scroll-m-20 text-xl md:text-2xl font-semibold tracking-tight text-foreground",
+      "mt-8 md:mt-10 scroll-m-20 text-xl md:text-2xl font-semibold font-mono text-text-primary",
+      "flex items-center gap-2",
+      "before:content-['###'] before:text-phosphor-400 before:text-base",
       className,
     )}
     {...props}
@@ -58,7 +64,9 @@ const CustomH4 = ({
 }: React.HTMLAttributes<HTMLHeadingElement>) => (
   <h4
     className={cn(
-      "mt-4 md:mt-6 scroll-m-20 text-lg md:text-xl font-semibold tracking-tight text-foreground",
+      "mt-6 md:mt-8 scroll-m-20 text-lg md:text-xl font-semibold font-mono text-text-primary",
+      "flex items-center gap-2",
+      "before:content-['####'] before:text-phosphor-400/70 before:text-sm",
       className,
     )}
     {...props}
@@ -71,7 +79,7 @@ const CustomP = ({
 }: React.HTMLAttributes<HTMLParagraphElement>) => (
   <p
     className={cn(
-      "leading-7 text-sm md:text-base text-muted-foreground [&:not(:first-child)]:mt-4 md:[&:not(:first-child)]:mt-6",
+      "leading-7 text-base font-mono text-text-secondary [&:not(:first-child)]:mt-4 md:[&:not(:first-child)]:mt-6",
       className,
     )}
     {...props}
@@ -84,7 +92,9 @@ const CustomUl = ({
 }: React.HTMLAttributes<HTMLUListElement>) => (
   <ul
     className={cn(
-      "my-4 md:my-6 ml-4 md:ml-6 list-disc space-y-1.5 md:space-y-2 text-sm md:text-base text-muted-foreground [&>li]:mt-1.5 md:[&>li]:mt-2",
+      "my-6 ml-6 space-y-2 text-base font-mono text-text-secondary",
+      "[&>li]:relative [&>li]:pl-6",
+      "[&>li]:before:content-['▸'] [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-phosphor-400",
       className,
     )}
     {...props}
@@ -97,7 +107,12 @@ const CustomOl = ({
 }: React.HTMLAttributes<HTMLOListElement>) => (
   <ol
     className={cn(
-      "my-4 md:my-6 ml-4 md:ml-6 list-decimal space-y-1.5 md:space-y-2 text-sm md:text-base text-muted-foreground [&>li]:mt-1.5 md:[&>li]:mt-2",
+      "my-6 ml-6 space-y-2 text-base font-mono text-text-secondary",
+      "[&>li]:relative [&>li]:pl-8",
+      "[&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-phosphor-400",
+      "list-none counter-reset-[item]",
+      "[&>li]:counter-increment-[item]",
+      "[&>li]:before:content-[counter(item)'.']",
       className,
     )}
     {...props}
@@ -110,7 +125,10 @@ const CustomBlockquote = ({
 }: React.HTMLAttributes<HTMLQuoteElement>) => (
   <blockquote
     className={cn(
-      "mt-6 border-l-2 border-primary pl-6 italic text-muted-foreground",
+      "my-6 border-l-2 border-phosphor-400 pl-6 font-mono text-text-secondary",
+      "bg-phosphor-400/5 py-4 pr-4",
+      "relative",
+      "before:content-['>'] before:absolute before:left-2 before:text-phosphor-400",
       className,
     )}
     {...props}
@@ -123,7 +141,8 @@ const CustomCode = ({
 }: React.HTMLAttributes<HTMLElement>) => (
   <code
     className={cn(
-      "relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm text-primary",
+      "relative rounded bg-phosphor-400/10 px-1.5 py-0.5 font-mono text-sm text-phosphor-400",
+      "border border-phosphor-400/20",
       className,
     )}
     {...props}
@@ -143,7 +162,8 @@ const CustomA = ({
 }: React.HTMLAttributes<HTMLAnchorElement>) => (
   <a
     className={cn(
-      "font-medium text-primary underline underline-offset-4 hover:text-primary/80",
+      "font-mono text-phosphor-400 underline underline-offset-4 hover:text-phosphor-300 transition-colors",
+      "decoration-phosphor-400/30 hover:decoration-phosphor-400",
       className,
     )}
     {...props}
@@ -152,12 +172,7 @@ const CustomA = ({
 
 export function MarkdownContent({ content, className }: MarkdownContentProps) {
   return (
-    <div
-      className={cn(
-        "prose prose-stone dark:prose-invert max-w-4xl mx-auto w-full px-4 md:px-6",
-        className,
-      )}
-    >
+    <div className={cn("w-full", className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, rehypeSlug]}

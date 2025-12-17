@@ -2,103 +2,105 @@ import fs from "fs";
 import path from "path";
 import { notFound } from "next/navigation";
 import { MarkdownContent } from "@/components/docs/MarkdownContent";
-import { Separator } from "@/components/ui/separator";
-import {
-  BookText,
-  Code2,
-  FlaskConical,
-  HelpCircle,
-  Settings,
-  BookOpen,
-} from "lucide-react";
+import { GlowBadge } from "@/components/ui/glow-text";
 
-const getIcon = (slug: string) => {
-  const icons = {
-    "post-installation": Settings,
-    api: Code2,
-    examples: BookText,
-    advanced: FlaskConical,
-    troubleshooting: HelpCircle,
-    installation: BookOpen,
+const getMetadata = (slug: string) => {
+  const metadata: Record<string, { title: string; description: string; command: string; status: string }> = {
+    installation: {
+      title: "Installation Guide",
+      description: "Get started with ksau in minutes",
+      command: "ksau install",
+      status: "stable",
+    },
+    "post-installation": {
+      title: "Post Installation",
+      description: "Configure and customize your installation",
+      command: "ksau config",
+      status: "stable",
+    },
+    api: {
+      title: "API Reference",
+      description: "Complete API documentation and endpoints",
+      command: "ksau api",
+      status: "stable",
+    },
+    examples: {
+      title: "Examples",
+      description: "Practical examples and code snippets",
+      command: "ksau examples",
+      status: "stable",
+    },
+    advanced: {
+      title: "Advanced Features",
+      description: "Unlock the full power of ksau",
+      command: "ksau --advanced",
+      status: "beta",
+    },
+    troubleshooting: {
+      title: "Troubleshooting",
+      description: "Solutions to common issues",
+      command: "ksau --help",
+      status: "stable",
+    },
   };
-  return icons[slug as keyof typeof icons] || BookText;
-};
-
-const getTitle = (slug: string) => {
-  const titles = {
-    "post-installation": "Post Installation Guide",
-    api: "API Reference",
-    examples: "Examples and Usage",
-    advanced: "Advanced Features",
-    troubleshooting: "Troubleshooting",
-    installation: "Installation Guide",
+  return metadata[slug] || {
+    title: slug,
+    description: "",
+    command: `ksau ${slug}`,
+    status: "stable",
   };
-  return titles[slug as keyof typeof titles] || slug;
 };
 
-const getDescription = (slug: string) => {
-  const descriptions = {
-    "post-installation": "Configure and customize your ksau installation",
-    api: "Complete API documentation and endpoints",
-    examples: "Learn through practical examples and code snippets",
-    advanced: "Unlock the full power of ksau with advanced configurations",
-    troubleshooting: "Solutions to common issues and problems",
-    installation: "Get started with ksau in minutes",
-  };
-  return descriptions[slug as keyof typeof descriptions] || "";
-};
-
-const getBackgroundImage = (slug: string) => {
-  return "";
-};
-
-export default function DocPage({ params }: { params: { slug: string } }) {
+export default async function DocPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   let markdownContent: string;
 
   try {
-    const filePath = path.join(process.cwd(), "docs", `${params.slug}.md`);
+    const filePath = path.join(process.cwd(), "docs", `${slug}.md`);
     markdownContent = fs.readFileSync(filePath, "utf8");
   } catch (error) {
     notFound();
   }
 
-  const Icon = getIcon(params.slug);
+  const meta = getMetadata(slug);
 
   return (
-    <article className="min-h-screen pb-8 md:pb-12">
-      <div className="relative">
-        <div className="relative pt-6 md:pt-8 lg:pt-12">
-          <div className="mx-auto max-w-3xl space-y-4 px-4 sm:px-6 lg:px-8">
-            <div className="flex items-start space-x-4">
-              <div className="rounded-lg border bg-card/50 backdrop-blur p-2.5 transition-transform active:scale-95">
-                <Icon className="h-6 w-6 text-primary" />
-              </div>
-              <div className="space-y-2">
-                <h1 className="text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl lg:text-5xl">
-                  {getTitle(params.slug)}
-                </h1>
-                <p className="text-lg text-muted-foreground sm:text-xl">
-                  {getDescription(params.slug)}
-                </p>
-              </div>
+    <article className="min-h-screen">
+      {/* Header */}
+      <div className="border-b border-terminal-border bg-terminal-surface/50 backdrop-blur">
+        <div className="mx-auto max-w-4xl px-6 py-8 md:py-12">
+          <div className="space-y-4">
+            {/* Command Line */}
+            <div className="flex items-center gap-2 font-mono text-sm text-text-tertiary">
+              <span className="text-phosphor-400">$</span>
+              <span>{meta.command}</span>
             </div>
-          </div>
-        </div>
 
-        <div className="mx-auto max-w-3xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-          <div className="rounded-lg border bg-card/50 backdrop-blur p-4 sm:p-6 lg:p-8 transition-colors hover:bg-card/60">
-            <div className="space-y-1.5">
-              <h3 className="font-semibold leading-none tracking-tight">
-                Documentation
-              </h3>
-              <p className="text-sm text-muted-foreground">
-                Learn everything you need to know about ksau
-              </p>
+            {/* Title & Status */}
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="text-3xl md:text-4xl font-bold text-text-primary font-mono">
+                {meta.title}
+              </h1>
+              <GlowBadge pulse={meta.status === "beta"}>
+                {meta.status}
+              </GlowBadge>
             </div>
-            <Separator className="my-6" />
-            <MarkdownContent content={markdownContent} />
+
+            {/* Description */}
+            <p className="text-lg text-text-secondary font-mono max-w-2xl">
+              {meta.description}
+            </p>
           </div>
         </div>
+      </div>
+
+      {/* Content */}
+      <div className="mx-auto max-w-4xl px-6 py-8 md:py-12">
+        <MarkdownContent content={markdownContent} />
       </div>
     </article>
   );

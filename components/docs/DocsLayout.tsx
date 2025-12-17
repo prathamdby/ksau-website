@@ -1,27 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import { cn } from "@/lib/utils";
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "../ui/navigation-menu";
-import {
-  ArrowDownToLine,
-  BookOpen,
-  BookText,
-  Code2,
-  FlaskConical,
-  HelpCircle,
-  Menu,
-  Settings,
-} from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 
 interface DocsLayoutProps {
   children: React.ReactNode;
@@ -29,125 +14,116 @@ interface DocsLayoutProps {
 }
 
 const navigationItems = [
-  { title: "Installation", href: "/docs/installation", icon: ArrowDownToLine },
-  {
-    title: "Post Installation",
-    href: "/docs/post-installation",
-    icon: Settings,
-  },
-  { title: "API Reference", href: "/docs/api", icon: Code2 },
-  { title: "Examples", href: "/docs/examples", icon: BookText },
-  { title: "Advanced Usage", href: "/docs/advanced", icon: FlaskConical },
-  { title: "Troubleshooting", href: "/docs/troubleshooting", icon: HelpCircle },
+  { title: "Installation", href: "/docs/installation", prefix: "01" },
+  { title: "Post Installation", href: "/docs/post-installation", prefix: "02" },
+  { title: "API Reference", href: "/docs/api", prefix: "03" },
+  { title: "Examples", href: "/docs/examples", prefix: "04" },
+  { title: "Advanced Usage", href: "/docs/advanced", prefix: "05" },
+  { title: "Troubleshooting", href: "/docs/troubleshooting", prefix: "06" },
 ];
 
 export function DocsLayout({ children, className }: DocsLayoutProps) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   const Navigation = () => {
-    const pathname =
-      typeof window !== "undefined" ? window.location.pathname : "";
-
     return (
-      <>
-        <div className="flex items-center gap-2 px-2 pb-6">
-          <BookOpen className="h-6 w-6 text-primary" />
-          <h3 className="text-lg font-semibold tracking-tight">
-            Documentation
-          </h3>
-        </div>
-        <ScrollArea className="h-[calc(100vh-8rem)]">
-          <NavigationMenu
-            orientation="vertical"
-            className="flex w-full flex-col"
-          >
-            <NavigationMenuList className="flex-col items-start gap-2 p-0 w-full">
-              {navigationItems.map((item) => {
-                const isActive = pathname === item.href;
-                return (
-                  <NavigationMenuItem
-                    key={item.href}
-                    className="w-full m-0 first:ml-1"
-                  >
-                    <Link href={item.href}>
-                      {/* @next-codemod-error This Link previously used the now removed `legacyBehavior` prop, and has a child that might not be an anchor. The codemod bailed out of lifting the child props to the Link. Check that the child component does not render an anchor, and potentially move the props manually to Link. */
-                      }
-                      <NavigationMenuLink
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "flex w-full items-center gap-3 rounded-lg py-2.5 text-sm font-medium transition-colors",
-                          "hover:bg-primary/10 hover:text-primary active:scale-[0.98]",
-                          "focus:bg-primary/10 focus:text-primary focus:outline-none",
-                          isActive && "bg-primary/10 text-primary",
-                          "px-4", // Explicit padding
-                        )}
-                      >
-                        <item.icon className="h-4 w-4 flex-shrink-0" />
-                        {item.title}
-                      </NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                );
-              })}
-            </NavigationMenuList>
-          </NavigationMenu>
-        </ScrollArea>
-      </>
+      <div className="space-y-1">
+        {navigationItems.map((item) => {
+          const isActive = pathname === item.href;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setOpen(false)}
+              className={cn(
+                "group flex items-center gap-3 px-3 py-2 text-sm transition-all",
+                "hover:text-phosphor-400",
+                isActive
+                  ? "text-phosphor-400 bg-phosphor-400/10 border-l-2 border-phosphor-400"
+                  : "text-text-secondary border-l-2 border-transparent hover:border-phosphor-400/30"
+              )}
+            >
+              <span className="text-xs text-text-tertiary font-mono flex-shrink-0">
+                {item.prefix}
+              </span>
+              <span className="font-mono truncate">{item.title}</span>
+              {isActive && (
+                <span className="ml-auto text-phosphor-400 animate-pulse flex-shrink-0">▌</span>
+              )}
+            </Link>
+          );
+        })}
+      </div>
     );
   };
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-terminal-void">
       {/* Mobile Menu */}
-      <div className="fixed inset-x-0 top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:hidden">
-        <div className="flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <BookOpen className="h-5 w-5 text-primary" />
-            <h3 className="text-base font-semibold tracking-tight">Docs</h3>
+      <div className="fixed inset-x-0 top-0 z-50 border-b border-terminal-border bg-terminal-void/95 backdrop-blur md:hidden">
+        <div className="flex h-14 items-center justify-between px-4">
+          <div className="flex items-center gap-2 font-mono">
+            <span className="text-phosphor-400">$</span>
+            <span className="text-sm text-text-primary">docs</span>
           </div>
-          <Sheet open={open} onOpenChange={setOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-full max-w-[300px] p-0">
-              <div className="border-b bg-muted/40 p-4">
-                <div className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5 text-primary" />
-                  <h3 className="text-base font-semibold tracking-tight">
-                    Documentation
-                  </h3>
-                </div>
-              </div>
-              <div className="px-4 py-6">
-                <Navigation />
-              </div>
-            </SheetContent>
-          </Sheet>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setOpen(!open)}
+            className="text-phosphor-400 hover:bg-phosphor-400/10"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
       </div>
 
-      {/* Desktop Sidebar */}
-      <div className="hidden border-r bg-muted/40 md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col lg:w-72">
-        <div className="flex flex-1 flex-col overflow-y-auto pt-5">
-          <div className="px-4">
-            <div className="pl-2">
+      {/* Mobile Sidebar Overlay */}
+      {open && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-terminal-void/80 backdrop-blur-sm md:hidden"
+            onClick={() => setOpen(false)}
+          />
+          <div className="fixed inset-y-0 left-0 z-50 w-72 border-r border-terminal-border bg-terminal-surface md:hidden">
+            <div className="border-b border-terminal-border p-4">
+              <div className="flex items-center gap-2 font-mono text-sm">
+                <span className="text-phosphor-400">$</span>
+                <span className="text-text-primary">ksau --help</span>
+              </div>
+            </div>
+            <ScrollArea className="h-[calc(100vh-4rem)] p-4">
               <Navigation />
+            </ScrollArea>
+          </div>
+        </>
+      )}
+
+      {/* Desktop Sidebar */}
+      <div className="hidden md:fixed md:inset-y-0 md:flex md:w-72 md:flex-col border-r border-terminal-border bg-terminal-surface">
+        <div className="border-b border-terminal-border p-4">
+          <div className="flex items-center gap-2 font-mono text-sm">
+            <span className="text-phosphor-400">$</span>
+            <span className="text-text-primary">ksau --help</span>
+          </div>
+        </div>
+        <ScrollArea className="flex-1 p-4">
+          <Navigation />
+        </ScrollArea>
+        <div className="border-t border-terminal-border p-4">
+          <div className="text-xs text-text-tertiary font-mono">
+            <div className="flex items-center gap-2">
+              <span className="h-2 w-2 rounded-full bg-phosphor-400 animate-pulse" />
+              <span>Online</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 md:pl-64 lg:pl-72">
-        <div className="relative">
-          {/* Mobile Header Spacer */}
-          <div className="h-16 md:hidden" />
-          <div className="px-4 pb-16 pt-6 md:px-8 md:pb-20 md:pt-8">
-            {children}
-          </div>
-        </div>
+      <div className="flex-1 md:pl-72">
+        <div className="h-14 md:hidden" />
+        {children}
       </div>
     </div>
   );
