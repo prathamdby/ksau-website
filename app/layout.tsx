@@ -1,6 +1,7 @@
 import "./globals.css";
 import { JetBrains_Mono } from "next/font/google";
 
+import Script from "next/script";
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
@@ -27,6 +28,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        {process.env.NODE_ENV === "development" && (
+          <Script
+            src="//unpkg.com/react-grab/dist/index.global.js"
+            crossOrigin="anonymous"
+            strategy="beforeInteractive"
+          />
+        )}
+      </head>
       <body className={`${jetbrainsMono.variable} font-mono scanlines vignette`}>
         {children}
       </body>

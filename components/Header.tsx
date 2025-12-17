@@ -15,9 +15,9 @@ const navItems = [
 
 function Logo() {
   return (
-    <div className="flex items-center gap-1">
+    <div className="flex items-center gap-1.5">
       <span className="text-phosphor-400 font-bold">{">"}</span>
-      <span className="text-text-primary font-bold">ksau</span>
+      <span className="text-text-primary font-bold tracking-tight">ksau</span>
       <span className="cursor-blink text-phosphor-400 font-light">_</span>
     </div>
   );
@@ -142,11 +142,11 @@ export default function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mt-4 flex items-center justify-between rounded-full border border-border bg-terminal-bg/80 backdrop-blur-md px-4 py-2">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <div className="mt-6 flex items-center rounded-xl border border-border bg-terminal-bg/80 backdrop-blur-md px-4 py-2.5 shadow-2xl">
           <Logo />
 
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-2 flex-1 justify-center">
             {navItems.map((item) => (
               <NavLink
                 key={item.name}
@@ -157,7 +157,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4 ml-auto">
             <Link
               href="#cta"
               onClick={(e) => {
@@ -166,9 +166,9 @@ export default function Header() {
                   .querySelector("#cta")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-1.5 text-sm font-medium rounded-full bg-phosphor-400 text-terminal-bg hover:bg-phosphor-300 transition-all duration-200 hover:shadow-glow-sm"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg bg-phosphor-400 text-terminal-bg hover:bg-phosphor-300 transition-all duration-200 hover:shadow-glow-sm"
             >
-              <span className="text-xs">$</span>
+              <span className="text-xs opacity-70">$</span>
               <span>install</span>
             </Link>
 
