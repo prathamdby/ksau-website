@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Download, Copy, Check, ExternalLink } from "lucide-react";
 import { TerminalWindow } from "@/components/ui/terminal-window";
 
-const installCommand = "curl -fsSL https://ksau.io/install | bash";
+const installCommand = "curl -fsSL https://ksau.ksauraj.eu.org/install | bash";
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false);

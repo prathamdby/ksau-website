@@ -139,10 +139,10 @@ export default function About() {
           <div className="inline-flex items-center gap-4 px-6 py-3 rounded-full bg-terminal-surface border border-border">
             <div className="flex items-center gap-2 text-sm">
               <span className="text-phosphor-400">$</span>
-              <span className="text-text-secondary">curl -fsSL https://ksau.io/install | bash</span>
+              <span className="text-text-secondary">curl -fsSL https://ksau.ksauraj.eu.org/install | bash</span>
             </div>
             <button
-              onClick={() => navigator.clipboard.writeText("curl -fsSL https://ksau.io/install | bash")}
+              onClick={() => navigator.clipboard.writeText("curl -fsSL https://ksau.ksauraj.eu.org/install | bash")}
               className="text-xs text-text-ghost hover:text-phosphor-400 transition-colors"
             >
               copy
